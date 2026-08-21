@@ -468,3 +468,12 @@ table.parts td.c-name .sub{color:var(--muted); font-size:11.5px}
   font:inherit; color:var(--text); background:var(--field);
   border:1px solid var(--line); border-radius:6px; padding:3px 6px; max-width:320px;
 }
+
+/* «Где применяется» в карточке детали — строки-ссылки на рисунки каталога */
+.pc-used{display:block; max-height:230px}
+.pc-used .r-where{
+  padding:5px 8px; border-bottom:1px solid var(--line-soft);
+  font-size:12.5px; cursor:pointer; border-radius:5px;
+}
+.pc-used .r-where:last-child{border-bottom:none}
+.pc-used .r-where:hover{background:var(--accent-soft); color:var(--text)}
