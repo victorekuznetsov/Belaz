@@ -173,7 +173,7 @@ def page_images(page, min_area=8000):
     return out
 
 
-def build(pdf, model_id, name, subtitle, group, out_root, chapter='2'):
+def build(pdf, model_id, name, subtitle, group, out_root, chapter='2', source=None):
     doc = pymupdf.open(pdf)
     sections = parse_sections(doc)
     figures = {}        # code -> {ru,en,desig,section,sheets:[],parts:[]}
@@ -247,7 +247,7 @@ def build(pdf, model_id, name, subtitle, group, out_root, chapter='2'):
         secs.append({'code': code, 'ru': s['ru'], 'en': s['en']})
     model = {
         'id': model_id, 'name': name, 'subtitle': subtitle, 'group': group,
-        'source': os.path.basename(pdf),
+        'source': source or os.path.basename(pdf),
         'sections': secs,
         'figures': [figures[c] for c in sorted(used, key=lambda s: [int(x) for x in s.split('.')])],
     }
@@ -274,7 +274,9 @@ if __name__ == '__main__':
     ap.add_argument('--subtitle', default='')
     ap.add_argument('--group', default='Машины БЕЛАЗ')
     ap.add_argument('--out', default='.')
+    ap.add_argument('--source-name', default=None,
+                    help='имя исходного файла для показа в каталоге')
     ap.add_argument('--chapter', default='2',
                     help='номер главы с иллюстрациями и деталировкой')
     a = ap.parse_args()
-    build(a.pdf, a.id, a.name, a.subtitle, a.group, a.out, a.chapter)
+    build(a.pdf, a.id, a.name, a.subtitle, a.group, a.out, a.chapter, a.source_name)
